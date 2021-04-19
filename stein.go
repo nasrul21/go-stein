@@ -54,7 +54,7 @@ func (s *Stein) Read(sheetName string, filter interface{}, v interface{}) (statu
 }
 
 // Insert to Stein
-func (s *Stein) Insert(sheetName string, body []interface{}) (status int, res InsertReponse, err error) {
+func (s *Stein) Insert(sheetName string, body interface{}) (status int, res InsertReponse, err error) {
 	reqByte, err := json.Marshal(body)
 	if err != nil {
 		return
