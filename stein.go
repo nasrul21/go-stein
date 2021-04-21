@@ -72,7 +72,7 @@ func (s *Stein) Insert(sheetName string, body interface{}) (status int, res Inse
 }
 
 // Update rows by condition
-func (s *Stein) Update(sheetName string, set map[string]interface{}, condition map[string]interface{}) (status int, res UpdateReponse, err error) {
+func (s *Stein) Update(sheetName string, set interface{}, condition map[string]interface{}) (status int, res UpdateReponse, err error) {
 	body := UpdateRequest{
 		Condition: condition,
 		Set:       set,
