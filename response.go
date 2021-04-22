@@ -5,7 +5,7 @@ type InsertReponse struct {
 }
 
 type UpdateReponse struct {
-	UpdatedRange string `json:"updatedRange"`
+	TotalUpdatedRows int `json:"totalUpdatedRows"`
 }
 
 type DeleteResponse struct {

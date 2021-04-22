@@ -62,8 +62,7 @@ func (s *Stein) Insert(sheetName string, body interface{}) (status int, res Inse
 
 	reqBody := bytes.NewReader(reqByte)
 
-	response := new(InsertReponse)
-	status, err = s.Call(http.MethodPost, sheetName, reqBody, &response)
+	status, err = s.Call(http.MethodPost, sheetName, reqBody, &res)
 	if err != nil {
 		return
 	}
@@ -85,8 +84,7 @@ func (s *Stein) Update(sheetName string, set interface{}, condition map[string]i
 
 	reqBody := bytes.NewReader(reqByte)
 
-	response := new(UpdateReponse)
-	status, err = s.Call(http.MethodPut, sheetName, reqBody, &response)
+	status, err = s.Call(http.MethodPut, sheetName, reqBody, &res)
 	if err != nil {
 		return
 	}
@@ -107,8 +105,7 @@ func (s *Stein) Delete(sheetName string, condition map[string]interface{}) (stat
 
 	reqBody := bytes.NewReader(reqByte)
 
-	response := new(DeleteResponse)
-	status, err = s.Call(http.MethodDelete, sheetName, reqBody, &response)
+	status, err = s.Call(http.MethodDelete, sheetName, reqBody, &res)
 	if err != nil {
 		return
 	}
@@ -156,7 +153,7 @@ func (s *Stein) executeRequest(req *http.Request, v interface{}) (status int, er
 // given to `v` if there is no error. If any error occurred, the return of this function is the error
 // itself, otherwise nil.
 func (s *Stein) Call(method, path string, body io.Reader, v interface{}) (status int, err error) {
-	req, err := s.newRequest(method, s.BaseURL+path, body)
+	req, err := s.newRequest(method, s.BaseURL+"/"+path, body)
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}
