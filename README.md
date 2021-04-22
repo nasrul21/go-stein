@@ -2,7 +2,7 @@
 This Go / Golang client helps you interact with the Stein API.
 > Stein is a suite of programs to help you turn any Google Sheet to a database. The core Stein API provides RESTful access to your sheets.
 > 
-> *[SteinHQ](steinhq.com)*
+> *[SteinHQ](https://steinhq.com)*
 
 ## Installation
 ```
