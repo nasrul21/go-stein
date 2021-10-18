@@ -45,12 +45,15 @@ func main() {
 |               |                                       |                                   |             |
 #### Example
 ```go
-// set your filter
-filter := map[string]interface{
-    "ID": 134,
+// set read option
+readOption := stein.ReadOption{
+    // don't set a `Search` field, if you wanna get all data
+    Search: map[string]interface{
+        "ID": 134,
+    }
 }
-result := &YourStruct{}
-status, err := client.Read("Sheet1", filter, &result)
+var result []YourStruct
+status, err := client.Read("Sheet1", readOption, &result)
 
 // if you want to get the data without filter
 // status, err := client.Read("Sheet1", nil, &result)
