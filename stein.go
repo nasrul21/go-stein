@@ -3,6 +3,7 @@ package stein
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -21,6 +22,10 @@ type Option struct {
 	Username string
 	Password string
 	Timeout  time.Duration
+}
+
+type ReadOption struct {
+	Search map[string]interface{}
 }
 
 // default http timeout
@@ -44,8 +49,16 @@ func NewClient(baseURL string, option *Option) *Stein {
 }
 
 // Read Stein API
-func (s *Stein) Read(sheetName string, filter interface{}, v interface{}) (status int, err error) {
-	status, err = s.Call(http.MethodGet, sheetName, nil, v)
+func (s *Stein) Read(sheetName string, option ReadOption, v interface{}) (status int, err error) {
+	var search string
+	searchByte, err := json.Marshal(option.Search)
+	if err != nil {
+		return
+	}
+	if len(option.Search) != 0 {
+		search = fmt.Sprintf("search=%s", string(searchByte))
+	}
+	status, err = s.Call(http.MethodGet, fmt.Sprintf("%s?%s", sheetName, search), nil, v)
 	if err != nil {
 		return
 	}
@@ -154,6 +167,7 @@ func (s *Stein) executeRequest(req *http.Request, v interface{}) (status int, er
 // itself, otherwise nil.
 func (s *Stein) Call(method, path string, body io.Reader, v interface{}) (status int, err error) {
 	req, err := s.newRequest(method, s.BaseURL+"/"+path, body)
+	fmt.Println(path)
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}
